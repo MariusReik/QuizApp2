@@ -1,116 +1,78 @@
+# Animal Quiz App
 
-QuizApp
-├── app
-│   ├── src
-│   │   ├── main
-│   │   │   ├── java
-│   │   │   │   └── com.example.quizapp
-│   │   │   │       ├── data
-│   │   │   │       │   ├── db
-│   │   │   │       │   │   ├── AppDatabase.java          // Room Database-klasse
-│   │   │   │       │   │   ├── GalleryItem.java          // Entity for bilde+navn
-│   │   │   │       │   │   └── GalleryDao.java           // DAO for database-interaksjon
-│   │   │   │       │   └── repository
-│   │   │   │       │       └── GalleryRepository.java    // Repository for databaseoperasjoner
-│   │   │   │       ├── ui
-│   │   │   │       │   ├── gallery
-│   │   │   │       │   │   ├── GalleryFragment.java
-│   │   │   │       │   │   ├── GalleryAdapter.java
-│   │   │   │       │   │   └── GalleryViewModel.java
-│   │   │   │       │   ├── quiz
-│   │   │   │       │   │   ├── QuizFragment.java
-│   │   │   │       │   │   └── QuizViewModel.java
-│   │   │   │       │   └── main
-│   │   │   │       │       └── MainActivity.java
-│   │   │   │       └── utils
-│   │   │   │           └── ImageUtils.java               // Hjelpemetoder (håndtere URI/bilder)
-│   │   │   ├── res
-│   │   │   │   ├── layout
-│   │   │   │   │   ├── activity_main.xml
-│   │   │   │   │   ├── fragment_gallery.xml
-│   │   │   │   │   ├── fragment_quiz.xml
-│   │   │   │   │   └── gallery_item.xml
-│   │   │   │   ├── drawable
-│   │   │   │   │   └── ic_launcher_background.xml
-│   │   │   │   ├── values
-│   │   │   │   │   ├── strings.xml
-│   │   │   │   │   ├── colors.xml
-│   │   │   │   │   └── themes.xml
-│   │   │   │   └── mipmap (app-ikon)
+## 📁 Project Structure
+
+```
+app/
+├── src/
+│   ├── main/
+│   │   ├── java/<your_package_name>/
+│   │   │   ├── data/
+│   │   │   │   ├── db/
+│   │   │   │   │   ├── AppDatabase.java           # Room database
+│   │   │   │   ├── GalleryDao.java                # Database operations interface
+│   │   │   │   └── GalleryItem.java               // Entity for image-name pairs
+│   │   │   │   └── GalleryRepository.java         // Repository abstraction
+│   │   │   ├── ui/
+│   │   │   │   ├── main/
+│   │   │   │   │   └── MainActivity.java
+│   │   │   │   ├── gallery/
+│   │   │   │   │   ├── GalleryFragment.java
+│   │   │   │   │   └── GalleryAdapter.java
+│   │   │   │   │   └── GalleryViewModel.java
+│   │   │   │   └── quiz/
+│   │   │   │       ├── QuizFragment.java
+│   │   │   │       └── QuizViewModel.java
+│   │   │   └── utils/
+│   │   │       └── ImageUtils.java
+│   │   ├── res/
+│   │   │   ├── layout/
+│   │   │   │   ├── activity_main.xml
+│   │   │   │   ├── fragment_gallery.xml
+│   │   │   │   ├── fragment_quiz.xml
+│   │   │   │   └── gallery_item.xml
+│   │   │   ├── mipmap/ (app icons)
+│   │   │   ├── drawable/ (drawable resources)
+│   │   │   ├── values/
+│   │   │   │   ├── colors.xml
+│   │   │   │   ├── themes.xml
+│   │   │   │   └── strings.xml
 │   │   │   └── AndroidManifest.xml
-│   │   └── test
-│   │       └── java
-│   │           └── com.example.quizapp (her kommer testene senere)
-└── README.md
+│   └── androidTest/
+│       └── java/<your_package_name>/
+│           ├── GalleryFragmentTest.java
+│           └── QuizFragmentTest.java
+└── build.gradle
 ```
 
----
+## 📚 Explanation
 
-## Forklaring av hovedstruktur:
+### Data Layer
+- **GalleryItem**: Defines a data entity for Room database representing pairs of photos and associated names.
+- **GalleryDao**: Provides database operations for CRUD.
+- **AppDatabase**: Room database setup.
+- **GalleryRepository**: Abstracts database interactions.
 
-### 📂 `data`-mappe (modell og database):
-- **`GalleryItem.java`**
-  - Entity som representerer en kombinasjon av navn og bilde (URI til bilde).
-- **`GalleryDao.java`**
-  - Interface med CRUD-operasjoner mot databasen.
-- **`AppDatabase.java`**
-  - Definerer Room-database og holder referanse til DAO.
-- **`GalleryRepository.java`**
-  - Abstraksjonslag mellom ViewModel og databasen.
+### UI Layer
+- **MainActivity.java**: Entry-point with navigation to gallery and quiz.
+- **GalleryFragment.java**: Manages gallery view and user interactions (add/remove/sort).
+- **QuizFragment.java**: Handles quiz logic and UI.
 
----
+### ViewModel Layer
+- **GalleryViewModel.java**: Maintains state for gallery UI.
+- **QuizViewModel.java**: Manages quiz state (current question, answers, and score).
 
-### 📂 `ui`-mappe (aktiviteter, fragments, og ViewModel):
+### Utils
+- **ImageUtils.java**: Contains helper functions for handling image URIs and file operations.
 
-#### ▶️ `main`
-- **`MainActivity.java`**
-  - Hovedaktivitet med navigasjon til Gallery og Quiz via knapper.
+### Layout Resources
+- Defined XML layouts for activities and fragments.
 
-#### 📷 `gallery`
-- **`GalleryFragment.java`**
-  - Fragment som viser galleri med bilder og navn.
-- **`GalleryAdapter.java`**
-  - Adapter for å vise GalleryItem-objekter i en RecyclerView.
-- **`GalleryViewModel.java`**
-  - ViewModel som lagrer og henter data fra databasen via repository.
-
-#### 📝 `quiz`
-- **`QuizFragment.java`**
-  - Fragment som håndterer quiz-aktiviteten (vise bilde, svarknapper, vise score).
-- **`QuizViewModel.java`**
-  - Holder quiz-logikken, data (nåværende bilde, svaralternativer, score) og ivaretar tilstand ved skjermrotasjon.
+### Testing
+- Tests located in `androidTest`, including intent stubs and validations of internal states.
 
 ---
 
-### 🔧 `utils`-mappe (hjelpefunksjoner):
-- **`ImageUtils.java`**
-  - Metoder for enklere håndtering av bilder og URI-konverteringer.
+Replace `<your_package_name>` with your project's actual package name.
 
----
-
-### 📂 `res`-mappe (ressurser og layouts):
-
-- **Layouts**: XML-filer for UI-elementer.
-  - `activity_main.xml`: Hovedmenyen med navigasjonsknapper.
-  - `fragment_gallery.xml`: UI for galleri-visning (RecyclerView med knapper).
-  - `fragment_quiz.xml`: UI for quiz (bilde og svar-knapper).
-  - `gallery_item.xml`: UI-oppsett for enkelt-element i galleriet (bilde og navn).
-
----
-
-### ✅ Testmappe for instrumenterte tester (AndroidTest-mappe):
-
-**(Automatisk opprettet av Android Studio når du legger til Espresso/UI-testing)**
-```
-androidTest
-└── java
-    └── com.example.projectname
-        ├── GalleryFragmentTest.java
-        └── QuizFragmentTest.java
-```
-
-Her vil du senere plassere tester som:
-- Sjekker riktig visning av galleri-elementer.
-- Validerer korrekt poengberegning i quiz-modulen.
-- Kontrollerer antall elementer etter legg til/slett-operasjoner.
 
